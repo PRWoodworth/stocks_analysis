@@ -23,6 +23,7 @@ framed_historical_data$Close <- as.numeric(framed_historical_data$Close)
 framed_historical_data$Open <- as.numeric(framed_historical_data$Open)
 framed_historical_data$High <- as.numeric(framed_historical_data$High)
 framed_historical_data$Low <- as.numeric(framed_historical_data$Low)
+# TODO: update to output to TICKERNAME_HISTORICAL_DATA.CSV
 write.csv(framed_historical_data, "historical_data.csv")
 
 plot(framed_historical_data$Close, xlab = "Date", ylab = "Closing Price")
