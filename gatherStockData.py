@@ -14,7 +14,7 @@ def gather_stock_data():
     str_from_date = from_date.strftime('%Y-%m-%d')
     z = 0
     headers = {"User-Agent": "PostmanRuntime/7.36.1"}
-    with open("Tickers.json") as ticker:
+    with open("historical_data/Tickers.json") as ticker:
         tickers = json.load(ticker)
         s = requests.session()
         for x in tickers['Data']:
@@ -29,7 +29,11 @@ def gather_stock_data():
             output = out.content
             information = json.loads(output)
             print(information)
-            if z >= 3:
+            filename = "historical_data/" + tickerName + ".json"
+            json_data = json.dumps(information, indent=4)
+            with open(filename, "w") as outfile:
+                outfile.write(json_data)
+            if z >= 6:
                 break
 
         s.close()
