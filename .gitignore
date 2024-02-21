@@ -1,1 +1,2 @@
-/historical_data
+/historical_data/*
+!/Tickers.json
