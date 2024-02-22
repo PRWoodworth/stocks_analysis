@@ -1,4 +1,4 @@
-library(ggplot2)
+# library(ggplot2)
 library(jsonlite)
 
 historical_data <- fromJSON(file.choose())
@@ -23,13 +23,12 @@ framed_historical_data$Close <- as.numeric(framed_historical_data$Close)
 framed_historical_data$Open <- as.numeric(framed_historical_data$Open)
 framed_historical_data$High <- as.numeric(framed_historical_data$High)
 framed_historical_data$Low <- as.numeric(framed_historical_data$Low)
-# TODO: update to output to TICKERNAME_HISTORICAL_DATA.CSV
-write.csv(framed_historical_data, "historical_data.csv")
+
+ticker_name <- historical_data$data$symbol
+filename <- paste(ticker_name, "_historical_data.csv", sep = "")
+filename <- file.path(paste(getwd(), "/historical_data/csv_data/", sep = ""), filename)
+
+write.csv(x = framed_historical_data, file = filename)
 
 plot(framed_historical_data$Close, xlab = "Date", ylab = "Closing Price")
 lines(framed_historical_data$Close)
-
-ggplot(data = framed_historical_data, aes(x = Date, y = Close)) +
-    geom_point(stat = "identity") +
-    geom_line(stat = "identity", color = "red") +
-    scale_x_continuous(breaks = framed_historical_data$Date)
