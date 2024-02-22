@@ -22,8 +22,7 @@ for (file in input_data_list) {
             )
         )
 
-    colnames(framed_historical_data) <-
-    c("Date", "Close", "Volume", "Open", "High", "Low")
+    colnames(framed_historical_data) <- c("Date", "Close", "Volume", "Open", "High", "Low")
     framed_historical_data$Close <- as.numeric(framed_historical_data$Close)
     framed_historical_data$Open <- as.numeric(framed_historical_data$Open)
     framed_historical_data$High <- as.numeric(framed_historical_data$High)
