@@ -25,7 +25,7 @@ framed_historical_data$High <- as.numeric(framed_historical_data$High)
 framed_historical_data$Low <- as.numeric(framed_historical_data$Low)
 
 ticker_name <- historical_data$data$symbol
-filename <- paste(ticker_name, "_historical_data.csv", sep = "")
+filename <- paste(ticker_name, ".csv", sep = "")
 filename <- file.path(paste(getwd(), "/historical_data/csv_data/", sep = ""), filename)
 
 write.csv(x = framed_historical_data, file = filename)
