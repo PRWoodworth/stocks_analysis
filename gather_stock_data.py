@@ -29,7 +29,7 @@ def gather_stock_data():
             output = out.content
             information = json.loads(output)
             print(information)
-            filename = "/historical_data/json_data/" + tickerName + ".json"
+            filename = "historical_data/json_data/" + tickerName + ".json"
             json_data = json.dumps(information, indent=4)
             with open(filename, "w") as outfile:
                 outfile.write(json_data)

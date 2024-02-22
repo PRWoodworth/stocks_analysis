@@ -1,9 +1,13 @@
 library(jsonlite)
 
-input_data_list <- list.files(path = "/historical_data/json_data", full.names = TRUE)
+input_data_list <- list.files(path = "historical_data/json_data", full.names = TRUE)
 for (file in input_data_list) {
     historical_data <- fromJSON(file)
-    trades_table <- historical_data$data$tradesTable$rows
+    data <- historical_data$data
+    if(is.null(data)){
+        next
+    }
+    trades_table <- data$tradesTable$rows
 
     framed_historical_data <- as.data.frame(trades_table)
 

@@ -1,3 +1,2 @@
 /historical_data/*
 !/historical_data/Tickers.json
-historical_data.csv
