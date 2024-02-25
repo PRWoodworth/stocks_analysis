@@ -7,8 +7,11 @@ for (file in input_data_list) {
     if(is.null(data)){
         next
     }
+    
     trades_table <- data$tradesTable$rows
-
+    if(is.null(trades_table)){
+        next
+    }
     framed_historical_data <- as.data.frame(trades_table)
 
     framed_historical_data <-

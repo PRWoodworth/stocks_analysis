@@ -34,8 +34,8 @@ def gather_stock_data():
             with open(filename, "w") as outfile:
                 outfile.write(json_data)
                 outfile.close
-            if z >= 6:
-                break
+            # if z >= 6:
+            #     break
 
         s.close()
 
