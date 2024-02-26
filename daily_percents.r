@@ -10,6 +10,7 @@ for (file in input_data_list) {
         daily_open <- c()
         daily_close <- c()
         daily_percent <- c()
+
         
     }
 }
