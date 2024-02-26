@@ -10,7 +10,7 @@ for (file in input_data_list) {
 
     daily_close <- input_data_frame[3]
     daily_open <- input_data_frame[5]
-    percent_change <- rep(NA, length(input_data_frame))
-    percent_change <- daily_close/daily_open
+    
+    percent_change <- rep(min(daily_close, daily_open)/max(daily_close, daily_open), length(input_data_frame$Index))
 
 }
