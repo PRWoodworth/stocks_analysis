@@ -6,11 +6,8 @@ for (file in input_data_list) {
                     .fun = read.csv,
                     header = FALSE,
                     col.names=c("Index","Date","Close","Volume","Open","High","Low") )
-    for (i in 1:nrow(input_data_frame)){
-        daily_open <- c()
-        daily_close <- c()
-        daily_percent <- c()
+    daily_close <- input_data_frame[3]
+    daily_open <- input_data_frame[5]
+    daily_percent <- c()
 
-        
-    }
 }
