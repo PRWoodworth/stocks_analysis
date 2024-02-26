@@ -24,11 +24,11 @@ def gather_stock_data():
             z = z + 1
             print(z)
             url = "https://api.nasdaq.com/api/quote/" + tickerName + "/historical?assetclass=stocks&fromdate=" + str_from_date + "&limit=2517&todate=" + str_to_date
-            print(url)
+            # print(url)
             out = s.get(url, headers=headers, timeout=5)
             output = out.content
             information = json.loads(output)
-            print(information)
+            # print(information)
             filename = "historical_data/json_data/" + tickerName + ".json"
             json_data = json.dumps(information, indent=4)
             with open(filename, "w") as outfile:
