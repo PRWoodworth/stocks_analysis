@@ -26,10 +26,14 @@ for (file in input_data_list) {
         )
 
     colnames(framed_historical_data) <- c("Date", "Close", "Volume", "Open", "High", "Low")
+
     framed_historical_data$Close <- as.numeric(framed_historical_data$Close)
     framed_historical_data$Open <- as.numeric(framed_historical_data$Open)
     framed_historical_data$High <- as.numeric(framed_historical_data$High)
     framed_historical_data$Low <- as.numeric(framed_historical_data$Low)
+
+    framed_historical_data$Date <- gsub("/", "", framed_historical_data$Date)
+    framed_historical_data$Date <- as.Date(framed_historical_data$Date, "%m%d%Y")
 
     daily_close <- framed_historical_data$Close
     daily_open <- framed_historical_data$Open
@@ -45,6 +49,6 @@ for (file in input_data_list) {
 
     write.csv(x = framed_historical_data, file = filename)
 
-    plot(framed_historical_data$Percent, xlab = "Date", ylab = "Percent Change", type = "b")
+    plot(y = framed_historical_data$Close, x = framed_historical_data$Date, xlab = "Date", ylab = "Close Price", type = "b")
 }
 
