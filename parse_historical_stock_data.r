@@ -1,4 +1,5 @@
 library(jsonlite)
+library(dplyr)
 
 input_data_list <- list.files(path = "historical_data/json_data", full.names = TRUE)
 for (file in input_data_list) {
@@ -42,6 +43,9 @@ for (file in input_data_list) {
     percent_change <- daily_close/daily_open
 
     framed_historical_data$Percent <- percent_change
+
+    is_num <- sapply(framed_historical_data, is.numeric)
+    framed_historical_data[is_num] <- lapply(framed_historical_data[is_num], round, 4)
 
     ticker_name <- historical_data$data$symbol
     filename <- paste(ticker_name, ".csv", sep = "")
