@@ -45,7 +45,6 @@ for (file in input_data_list) {
 
     write.csv(x = framed_historical_data, file = filename)
 
-    plot(framed_historical_data$Close, xlab = "Date", ylab = "Closing Price")
-    lines(framed_historical_data$Close)
+    plot(framed_historical_data$Percent, xlab = "Date", ylab = "Percent Change", type = "b")
 }
 
