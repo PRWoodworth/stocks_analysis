@@ -12,6 +12,6 @@ for (file in input_data_list) {
     daily_open <- input_data_frame[5]
     
     percent_change <- rep(NA, length(input_data_frame))
-    percent_change <- daily_close/daily_open
-
+    percent_change <- daily_open/daily_close
+    
 }
