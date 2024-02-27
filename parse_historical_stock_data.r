@@ -28,24 +28,19 @@ input_data_list <- list.files(path = "historical_data/json_data", full.names = T
 for (file in input_data_list) {
     historical_data <- fromJSON(file)
     data <- historical_data$data
-    if(is.null(data)){
-        next
-    }
-    
-    trades_table <- data$tradesTable$rows
-    if(is.null(trades_table)){
+    if(is.null(historical_data$data) || is.null (data$tradesTable$rows)){
         next
     }
     
     framed_historical_data <- as.data.frame(
-            lapply(
-                trades_table,
-                gsub,
-                pattern = "$",
-                fixed = TRUE,
-                replacement = ""
-            )
+        lapply(
+            data$tradesTable$rows,
+            gsub,
+            pattern = "$",
+            fixed = TRUE,
+            replacement = ""
         )
+    )
 
     colnames(framed_historical_data) <- c("Date", "Close", "Volume", "Open", "High", "Low")
 
