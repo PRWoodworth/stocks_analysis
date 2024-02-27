@@ -31,6 +31,14 @@ for (file in input_data_list) {
     framed_historical_data$High <- as.numeric(framed_historical_data$High)
     framed_historical_data$Low <- as.numeric(framed_historical_data$Low)
 
+    daily_close <- framed_historical_data$Close
+    daily_open <- framed_historical_data$Open
+    
+    percent_change <- rep(NA, length(framed_historical_data))
+    percent_change <- daily_close/daily_open
+
+    framed_historical_data$Percent <- percent_change
+
     ticker_name <- historical_data$data$symbol
     filename <- paste(ticker_name, ".csv", sep = "")
     filename <- file.path(paste(getwd(), "/historical_data/csv_data/", sep = ""), filename)
