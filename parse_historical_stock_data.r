@@ -1,5 +1,4 @@
 library(jsonlite)
-library(dplyr)
 
 input_data_list <- list.files(path = "historical_data/json_data", full.names = TRUE)
 for (file in input_data_list) {
