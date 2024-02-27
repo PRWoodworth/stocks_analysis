@@ -36,12 +36,10 @@ for (file in input_data_list) {
     if(is.null(trades_table)){
         next
     }
-    framed_historical_data <- as.data.frame(trades_table)
-
-    framed_historical_data <-
-        as.data.frame(
+    
+    framed_historical_data <- as.data.frame(
             lapply(
-                framed_historical_data,
+                trades_table,
                 gsub,
                 pattern = "$",
                 fixed = TRUE,
