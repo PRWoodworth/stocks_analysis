@@ -52,8 +52,8 @@ for (file in input_data_list) {
     is_num <- sapply(framed_historical_data, is.numeric)
     framed_historical_data[is_num] <- lapply(framed_historical_data[is_num], round, 4)
 
-    filename <- paste(historical_data$data$symbol, ".csv", sep = "")
-    filename <- file.path(paste(getwd(), "/historical_data/csv_data/", sep = ""), filename)
+    filename <- file.path(paste(getwd(), "/historical_data/csv_data/", sep = ""), 
+                        paste(historical_data$data$symbol, ".csv", sep = ""))
 
     write.csv(x = framed_historical_data, file = filename)
 
