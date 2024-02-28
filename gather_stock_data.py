@@ -18,7 +18,7 @@ def chunks(data, parts):
         divided[-1] += [data[-1]]
     return divided
 
-def do_job(job_id, data_slice):
+def query_stock_data(job_id, data_slice):
     to_date = date.today()
     from_date = to_date - relativedelta(years=10)
     str_to_date = to_date.strftime('%Y-%m-%d')
@@ -47,13 +47,13 @@ def dispatch_jobs(data, job_number):
     slice = chunks(data, chunk_size)
     jobs = []
     for i, s in enumerate(slice):
-        j = multiprocessing.Process(target=do_job, args=(i, s))
+        j = multiprocessing.Process(target=query_stock_data, args=(i, s))
         jobs.append(j)
     for j in jobs:
         j.start()
 
 
-def gather_stock_data():
+def read_stock_tickers():
     with open("./historical_data/Tickers.json") as ticker:
         tickers = json.load(ticker)
         for x in tickers['Data']:
@@ -62,7 +62,7 @@ def gather_stock_data():
         
 
 def main():
-    stock_ticker_list = gather_stock_data()
+    stock_ticker_list = read_stock_tickers()
     dispatch_jobs(stock_ticker_list, 4)
 
 if __name__ == '__main__':
