@@ -1,4 +1,5 @@
 library(jsonlite)
+library(formattable)
 
 correct_datatypes <- function(framed_historical_data) {
     framed_historical_data$Close <- as.numeric(framed_historical_data$Close)
@@ -18,9 +19,10 @@ add_daily_percents <- function(framed_historical_data){
     
     percent_change <- rep(NA, length(framed_historical_data))
     percent_change <- daily_close/daily_open
+    percent_change <- percent(percent_change - 1)
+    
 
     framed_historical_data$Percent <- percent_change
-
     return(framed_historical_data)
 }
 
@@ -56,7 +58,7 @@ for (file in input_data_list) {
 
     write.csv(x = framed_historical_data, file = filename)
 
-    plot(y = framed_historical_data$Close, x = framed_historical_data$Date, xlab = "Date", ylab = "Close Price", type = "b")
+    plot(y = framed_historical_data$Close, x = framed_historical_data$Date, xlab = "Date", ylab = "Close Price", type = "o")
 }
 
 
