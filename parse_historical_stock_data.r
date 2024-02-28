@@ -30,7 +30,7 @@ input_data_list <- list.files(path = "historical_data/json_data", full.names = T
 for (file in input_data_list) {
     historical_data <- fromJSON(file)
     data <- historical_data$data
-    if(is.null(historical_data$data) || is.null (data$tradesTable$rows)){
+    if(is.null(data) || is.null (data$tradesTable$rows)){
         next
     }
     
@@ -52,8 +52,7 @@ for (file in input_data_list) {
     is_num <- sapply(framed_historical_data, is.numeric)
     framed_historical_data[is_num] <- lapply(framed_historical_data[is_num], round, 4)
 
-    ticker_name <- historical_data$data$symbol
-    filename <- paste(ticker_name, ".csv", sep = "")
+    filename <- paste(historical_data$data$symbol, ".csv", sep = "")
     filename <- file.path(paste(getwd(), "/historical_data/csv_data/", sep = ""), filename)
 
     write.csv(x = framed_historical_data, file = filename)
