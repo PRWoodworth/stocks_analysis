@@ -4,7 +4,7 @@ from datetime import date
 from dateutil.relativedelta import relativedelta
 from queue import *
 import threading
-from time import sleep
+import time 
 
 
 data = []
@@ -37,7 +37,6 @@ def query_stock_data(stock_ticker_list):
             outfile.close
         stock_ticker_list.task_done()
         s.close()
-        # TODO: under what conditions does this actually end?
 
 
 def read_stock_tickers():
@@ -49,6 +48,7 @@ def read_stock_tickers():
         
 
 def main():
+    start = time.time()
     stock_ticker_list = read_stock_tickers()
     stock_ticker_queue = Queue()
     for i in range(num_threads): 
@@ -58,6 +58,10 @@ def main():
 
     for x in stock_ticker_list:
         stock_ticker_queue.put(x)
+
+    end = time.time()
+    duration = start - end 
+    print("All stock tickers queried in",duration,"seconds.")
 
 if __name__ == '__main__':
     main()
