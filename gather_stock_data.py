@@ -3,7 +3,7 @@ import requests
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from queue import *
-from threading import Thread
+import threading
 from time import sleep
 
 
@@ -21,6 +21,8 @@ def query_stock_data(stock_ticker_list):
     s = requests.session()
     while True:
         tickerName = stock_ticker_list.get()
+        if tickerName is None:
+            next()
         print(tickerName)
         z = z + 1
         print(z)
@@ -47,15 +49,14 @@ def read_stock_tickers():
 
 def main():
     stock_ticker_list = read_stock_tickers()
-    stock_ticker_queue = Queue(stock_ticker_list)
+    stock_ticker_queue = Queue()
     for i in range(num_threads): 
-        worker = Thread(target = query_stock_data, args = (stock_ticker_queue,))
-        worker.start
-    
-    for x in stock_ticker_list:
-        stock_ticker_queue.put(x)
+        threading.Thread(target = query_stock_data, args = (stock_ticker_queue,)).start()
 
     stock_ticker_queue.join()
+
+    for x in stock_ticker_list:
+        stock_ticker_queue.put(x)
 
 if __name__ == '__main__':
     main()
