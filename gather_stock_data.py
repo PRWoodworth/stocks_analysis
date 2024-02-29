@@ -2,23 +2,16 @@ import json
 import requests
 from datetime import date
 from dateutil.relativedelta import relativedelta
-import multiprocessing
+from queue import *
+from threading import Thread
+from time import sleep
 
 
 data = []
 symbol = []
+num_threads = 4
 
-# TODO: fix data chunking 
-def chunks(data, parts):
-    divided = list()
-    n = len(data) // parts
-    for i in range(parts):
-        divided[i] = data[i*n:n*(i+1)]
-    if len(data) % 2 != 0:
-        divided[-1] += [data[-1]]
-    return divided
-
-def query_stock_data(job_id, data_slice):
+def query_stock_data(stock_ticker_list):
     to_date = date.today()
     from_date = to_date - relativedelta(years=10)
     str_to_date = to_date.strftime('%Y-%m-%d')
@@ -26,8 +19,9 @@ def query_stock_data(job_id, data_slice):
     z = 0
     headers = {"User-Agent": "PostmanRuntime/7.36.1"}
     s = requests.session()
-    for tickerName in data_slice:
-        print(job_id + " " + tickerName)
+    while True:
+        tickerName = stock_ticker_list.get()
+        print(tickerName)
         z = z + 1
         print(z)
         url = "https://api.nasdaq.com/api/quote/" + tickerName + "/historical?assetclass=stocks&fromdate=" + str_from_date + "&limit=2517&todate=" + str_to_date
@@ -39,18 +33,8 @@ def query_stock_data(job_id, data_slice):
         with open(filename, "w") as outfile:
             outfile.write(json_data)
             outfile.close
-    s.close()
-
-def dispatch_jobs(data, job_number):
-    total = len(data)
-    chunk_size = total / job_number
-    slice = chunks(data, chunk_size)
-    jobs = []
-    for i, s in enumerate(slice):
-        j = multiprocessing.Process(target=query_stock_data, args=(i, s))
-        jobs.append(j)
-    for j in jobs:
-        j.start()
+        stock_ticker_list.task_done()
+        s.close()
 
 
 def read_stock_tickers():
@@ -63,7 +47,15 @@ def read_stock_tickers():
 
 def main():
     stock_ticker_list = read_stock_tickers()
-    dispatch_jobs(stock_ticker_list, 4)
+    stock_ticker_queue = Queue(stock_ticker_list)
+    for i in range(num_threads): 
+        worker = Thread(target = query_stock_data, args = (stock_ticker_queue,))
+        worker.start
+    
+    for x in stock_ticker_list:
+        stock_ticker_queue.put(x)
+
+    stock_ticker_queue.join()
 
 if __name__ == '__main__':
     main()
