@@ -9,7 +9,7 @@ from time import sleep
 
 data = []
 symbol = []
-num_threads = 4
+num_threads = 10
 
 def query_stock_data(stock_ticker_list):
     to_date = date.today()
@@ -18,8 +18,8 @@ def query_stock_data(stock_ticker_list):
     str_from_date = from_date.strftime('%Y-%m-%d')
     z = 0
     headers = {"User-Agent": "PostmanRuntime/7.36.1"}
-    s = requests.session()
     while True:
+        s = requests.session()
         tickerName = stock_ticker_list.get()
         if tickerName is None:
             next()
@@ -37,6 +37,7 @@ def query_stock_data(stock_ticker_list):
             outfile.close
         stock_ticker_list.task_done()
         s.close()
+        # TODO: under what conditions does this actually end?
 
 
 def read_stock_tickers():
