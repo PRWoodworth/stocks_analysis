@@ -5,7 +5,13 @@ from dateutil.relativedelta import relativedelta
 from queue import *
 import threading
 import time 
+import logging
+import os 
+import sys
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+logging.basicConfig(filename=dir_path+'/logs/get_stock_data.log', encoding='utf-8', level=logging.DEBUG, filemode = "w")
 
 data = []
 symbol = []
@@ -23,10 +29,8 @@ def query_stock_data(stock_ticker_list, task_number):
         tickerName = stock_ticker_list.get()
         if tickerName is None:
             next()
-        print("Worker task",task_number,"beginning on ticker", tickerName)
+        logging.info("Worker task %s beginning on ticker %s", task_number, tickerName)
         work_start = time.time()
-        # z = z + 1
-        # print(z)
         url = "https://api.nasdaq.com/api/quote/" + tickerName + "/historical?assetclass=stocks&fromdate=" + str_from_date + "&limit=2517&todate=" + str_to_date
         information = json.loads(s.get(url, headers=headers, timeout=5).content)
         filename = "historical_data/json_data/" + tickerName + ".json"
@@ -37,7 +41,7 @@ def query_stock_data(stock_ticker_list, task_number):
         stock_ticker_list.task_done()
         work_done = time.time()
         work_total = work_done - work_start
-        print("Worker task",task_number,"completed on ticker", tickerName, "after", work_total, "seconds.")
+        logging.info("Worker task %s completed on ticker %s after %s seconds.", task_number, tickerName, work_total)
         s.close()
 
 
@@ -62,7 +66,8 @@ def main():
     stock_ticker_queue.join()
     end = time.time()
     duration = end - start 
-    print("All stock tickers queried in",duration,"seconds.")
+    logging.info("All stock tickers queried in %s seconds.", duration)
+    sys.exit()
 
 if __name__ == '__main__':
     main()
