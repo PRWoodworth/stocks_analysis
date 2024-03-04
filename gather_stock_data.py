@@ -15,7 +15,7 @@ logging.basicConfig(filename=dir_path+'/logs/get_stock_data.log', encoding='utf-
 
 data = []
 symbol = []
-num_threads = 20
+num_threads = 40
 
 def query_stock_data(stock_ticker_list, task_number):
     to_date = date.today()
@@ -32,7 +32,7 @@ def query_stock_data(stock_ticker_list, task_number):
         logging.info("Worker task %s beginning on ticker %s", task_number, tickerName)
         work_start = time.time()
         url = "https://api.nasdaq.com/api/quote/" + tickerName + "/historical?assetclass=stocks&fromdate=" + str_from_date + "&limit=2517&todate=" + str_to_date
-        information = json.loads(s.get(url, headers=headers, timeout=5).content)
+        information = json.loads(s.get(url, headers=headers, timeout=10).content)
         filename = "historical_data/json_data/" + tickerName + ".json"
         json_data = json.dumps(information, indent=4)
         with open(filename, "w") as outfile:

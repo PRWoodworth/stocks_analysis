@@ -1,0 +1,1 @@
+# TODO: go through all historical CSV data, identify tickers with average % change of 0% to X%
