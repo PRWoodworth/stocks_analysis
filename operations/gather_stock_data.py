@@ -10,8 +10,10 @@ import os
 import sys
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
+log_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'logs')
+log_fname = os.path.join(log_dir, 'get_stock_data.log')
 
-logging.basicConfig(filename=dir_path+'/logs/get_stock_data.log', encoding='utf-8', level=logging.DEBUG, filemode = "w")
+logging.basicConfig(filename=log_fname, encoding='utf-8', level=logging.DEBUG, filemode = "w")
 
 data = []
 symbol = []
@@ -46,7 +48,7 @@ def query_stock_data(stock_ticker_list, task_number):
 
 
 def read_stock_tickers():
-    with open("./historical_data/Tickers.json") as ticker:
+    with open('..\\historical_data\\Tickers.json') as ticker:
         tickers = json.load(ticker)
         for x in tickers['Data']:
             symbol.append(x['Symbol'])
