@@ -21,12 +21,13 @@ def iterate_pull_data():
     for file in os.listdir(dir_path + "./historical_data/csv_data"):
         df = pd.read_csv(file) 
         data_frame.append(df) 
-        viability = check_viability(data_frame)
+        viability = check_viability(data_frame, 30)
         print_viability(viability, data_frame)
         data_frame.iloc[0:0]
 
-def check_viability(input_data_frame):
+def check_viability(input_data_frame, time_period):
     viability = 0
+    viability = input_data_frame['Percent'].head(time_period).sum() / time_period;
     # TODO: average past 30 days of stock 
     return viability
 
