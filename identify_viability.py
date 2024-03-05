@@ -1,4 +1,4 @@
-# TODO: go through all historical CSV data, identify tickers with average % change of 0% to X%
+# TODO: go through all historical CSV data, identify tickers with average % change of 0% to X% over a time period
 
 import json
 import requests
