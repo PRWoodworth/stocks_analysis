@@ -27,8 +27,10 @@ def iterate_pull_data():
 
 def check_viability(input_data_frame):
     viability = 0
+    # TODO: average past 30 days of stock 
     return viability
 
-# TODO: generate CSV file of identified viable tickers?
+# TODO: generate CSV file of identified viable tickers
 def print_viability(viability, data_frame):
+    # TODO: append to output file
     return
