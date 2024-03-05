@@ -23,8 +23,7 @@ def iterate_pull_data():
     data_frame = pd.DataFrame() 
     csv_files = os.listdir(csv_dir)
     for file in csv_files:
-        print(file)
-        logging.log("Starting baseline viability check on %s.", file)
+        logging.info("Starting baseline viability check on %s", file)
         df = pd.read_csv(file) 
         data_frame.append(df) 
         viability = check_viability(data_frame, 30)
@@ -33,8 +32,7 @@ def iterate_pull_data():
 
 def check_viability(input_data_frame, time_period):
     viability = 0
-    viability = input_data_frame['Percent'].head(time_period).sum() / time_period;
-    # TODO: average past 30 days of stock 
+    viability = input_data_frame['Percent'].head(time_period).sum() / time_period
     return viability
 
 # TODO: generate CSV file of identified viable tickers

@@ -48,7 +48,9 @@ def query_stock_data(stock_ticker_list, task_number):
 
 
 def read_stock_tickers():
-    with open('..\\historical_data\\Tickers.json') as ticker:
+    input_file_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'historical_data')
+    input_file = os.path.join(input_file_dir, 'Tickers.json')
+    with open(input_file) as ticker:
         tickers = json.load(ticker)
         for x in tickers['Data']:
             symbol.append(x['Symbol'])
