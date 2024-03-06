@@ -25,12 +25,10 @@ def iterate_pull_data():
     csv_files = glob.glob(csv_dir + '\\*')
     for file in csv_files:
         logging.info("Starting baseline viability check on %s", file)
-        df = pd.read_csv(file) 
-        # TODO: change to .concat() instead of .append()
-        data_frame.append(df) 
+        data_frame = pd.read_csv(file)
         viability = check_viability(data_frame, 30)
         print_viability(viability, data_frame)
-        data_frame.iloc[0:0]
+        data_frame.loc[:] = None
 
 def check_viability(input_data_frame, time_period):
     viability = 0

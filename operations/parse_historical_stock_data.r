@@ -6,6 +6,7 @@ correct_datatypes <- function(framed_historical_data) {
     framed_historical_data$Open <- as.numeric(framed_historical_data$Open)
     framed_historical_data$High <- as.numeric(framed_historical_data$High)
     framed_historical_data$Low <- as.numeric(framed_historical_data$Low)
+    framed_historical_data$Volume <- as.numeric(gsub(",", "", framed_historical_data$Volume))
 
     framed_historical_data$Date <- gsub("/", "", framed_historical_data$Date)
     framed_historical_data$Date <- as.Date(framed_historical_data$Date, "%m%d%Y")
