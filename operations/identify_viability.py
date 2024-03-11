@@ -1,10 +1,4 @@
-import json
-import requests
-from datetime import date
-from dateutil.relativedelta import relativedelta
 from queue import *
-import threading
-import time 
 import logging
 import os 
 import sys
@@ -30,7 +24,6 @@ def percent_to_float(x):
 def iterate_pull_data():
     data_frame = pd.DataFrame() 
     csv_files = glob.glob(csv_dir + '\\*')
-    viability_frame = pd.DataFrame()
     row_list = []
     for file in csv_files:
         dict = {}
@@ -44,7 +37,7 @@ def iterate_pull_data():
         dict.update({ticker_name: viability})
         row_list.append(dict)
         data_frame.loc[:] = None
-    viability_frame = pd.DataFrame(row_list)
+    viability_frame = pd.DataFrame(row_list, columns = ['Stock Ticker', 'Baseline Viability'])
     return viability_frame
 
 def check_viability(input_data_frame, time_period):
