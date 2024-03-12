@@ -24,9 +24,8 @@ def percent_to_float(x):
 def iterate_pull_data():
     data_frame = pd.DataFrame() 
     csv_files = glob.glob(csv_dir + '\\*')
-    row_list = []
+    viability_frame = pd.DataFrame(columns = ['Ticker', 'Percent'])
     for file in csv_files:
-        dict = {}
         filename = (os.path.basename(file).split('/')[-1])
         ticker_name = filename.split('.')[0]
         logging.info("Starting baseline viability check on %s", filename)
@@ -34,10 +33,8 @@ def iterate_pull_data():
         data_frame = data_frame.loc[:, ~data_frame.columns.str.contains('^Unnamed')]
         viability = float(check_viability(data_frame, 7))
         logging.info("Baseline viability: %s", viability)
-        dict.update({ticker_name: viability})
-        row_list.append(dict)
+        viability_frame = pd.concat([pd.DataFrame([[ticker_name, viability]], columns = viability_frame.columns), viability_frame], ignore_index = True)
         data_frame.loc[:] = None
-    viability_frame = pd.DataFrame(row_list, columns = ['Stock Ticker', 'Baseline Viability'])
     return viability_frame
 
 def check_viability(input_data_frame, time_period):
