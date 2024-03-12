@@ -17,7 +17,7 @@ def percent_to_float(x):
     try:
         output = float(x.strip('%'))/100
         return output
-    except : 
+    except: 
         logging.exception("Unable to de-percent input: %s", x)
     
 
@@ -32,7 +32,7 @@ def iterate_pull_data():
         logging.info("Starting baseline viability check on %s", filename)
         data_frame = pd.read_csv(file, converters={'Percent':percent_to_float}, header=0)
         data_frame = data_frame.loc[:, ~data_frame.columns.str.contains('^Unnamed')]
-        viability = check_viability(data_frame, 7)
+        viability = float(check_viability(data_frame, 7))
         logging.info("Baseline viability: %s", viability)
         dict.update({ticker_name: viability})
         row_list.append(dict)
