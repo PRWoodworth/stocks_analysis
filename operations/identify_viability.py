@@ -17,6 +17,10 @@ csv_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'historical_data\
 logging.basicConfig(filename=log_fname, encoding='utf-8', level=logging.DEBUG, filemode = "w")
 
 def percent_to_float(x):
+    logging.info("De-percenting %s", x)
+    x = x.strip()
+    if(x.lower == "nan" or x.lower == "na"):
+        x = "0.00%"
     try:
         output = float(x.strip('%'))/100
         return output
@@ -32,7 +36,7 @@ def iterate_pull_data(timeframe_days):
         filename = (os.path.basename(file).split('/')[-1])
         ticker_name = filename.split('.')[0]
         logging.info("Starting baseline viability check on %s", filename)
-        data_frame = pd.read_csv(file, converters={'Percent':percent_to_float}, header=0)
+        data_frame = pd.read_csv(file, converters={'Percent':percent_to_float}, header=0, nrows = timeframe_days)
         data_frame = data_frame.loc[:, ~data_frame.columns.str.contains('^Unnamed')]
         viability = float(check_viability(data_frame, timeframe_days))
         logging.info("Baseline viability: %s", viability)
@@ -60,6 +64,7 @@ def main():
     logging.info("Timeframe of %s days.", timeframe_days)
     viability_frame = iterate_pull_data(timeframe_days)
     print_viability(viability_frame, timeframe_days)
+    return json.dumps({"success": True}), 201
 
 if __name__ == '__main__':
     api.run()
