@@ -1,0 +1,6 @@
+curl --location --request PUT 'http://localhost:5000/identify_viability' \
+--header 'Content-Type: application/json' \
+--data '{
+    "timeframe": 7
+}
+'

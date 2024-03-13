@@ -5,6 +5,9 @@ import sys
 import pandas as pd 
 import glob
 
+from flask import Flask, json, request
+api = Flask(__name__)
+
 dir_path = os.path.dirname(os.path.realpath(__file__))
 log_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'logs')
 log_fname = os.path.join(log_dir, 'identify_viability.log')
@@ -51,11 +54,12 @@ def print_viability(data_frame, timeframe_days):
     data_frame.to_csv(viability_fname ,encoding='utf-8')
     return
 
+@api.route('/identify_viability', methods=['PUT'])
 def main():
-    timeframe_days = 7
+    timeframe_days = request.get_json().get('timeframe')
+    logging.info("Timeframe of %s days.", timeframe_days)
     viability_frame = iterate_pull_data(timeframe_days)
     print_viability(viability_frame, timeframe_days)
-    sys.exit()
 
 if __name__ == '__main__':
-    main()
+    api.run()
