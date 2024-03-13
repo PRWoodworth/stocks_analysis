@@ -4,12 +4,6 @@ import os
 import sys
 import pandas as pd 
 import glob
-import json
-import requests
-from flask import Flask
-from identify_viability import main
-
-app = Flask(__name__)
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 log_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'logs')
@@ -57,7 +51,6 @@ def print_viability(data_frame, timeframe_days):
     data_frame.to_csv(viability_fname ,encoding='utf-8')
     return
 
-@app.route("/")
 def main():
     timeframe_days = 7
     viability_frame = iterate_pull_data(timeframe_days)
@@ -65,5 +58,4 @@ def main():
     sys.exit()
 
 if __name__ == '__main__':
-    app.run(host="127.0.0.1", port=8080, debug=True)
     main()
