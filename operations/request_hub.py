@@ -1,6 +1,6 @@
 from identify_viability import main as identify_viability_main
 
-from flask import Flask, json, request
+from flask import Flask
 api = Flask(__name__)
 
 @api.route('/identify_viability', methods=['PUT'])
