@@ -17,6 +17,7 @@ logging.basicConfig(filename=log_fname, encoding='utf-8', level=logging.DEBUG, f
 def percent_to_float(x):
     logging.info("De-percenting %s", x)
     x = x.strip()
+    # TODO: use RegEx in below to check if input is a percent
     if(x.lower == "nan" or x.lower == "na"):
         x = "0.00%"
     try:
