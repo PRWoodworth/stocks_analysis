@@ -1,12 +1,10 @@
 from queue import *
 import logging
-import os 
-import sys
+import os
 import pandas as pd 
 import glob
 
-from flask import Flask, json, request
-api = Flask(__name__)
+from flask import json
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 log_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'logs')
@@ -58,7 +56,6 @@ def print_viability(data_frame, timeframe_days):
     data_frame.to_csv(viability_fname ,encoding='utf-8')
     return
 
-@api.route('/identify_viability', methods=['PUT'])
 def main():
     timeframe_days = request.get_json().get('timeframe')
     logging.info("Timeframe of %s days.", timeframe_days)
@@ -66,5 +63,4 @@ def main():
     print_viability(viability_frame, timeframe_days)
     return json.dumps({"success": True}), 201
 
-if __name__ == '__main__':
-    api.run()
+
