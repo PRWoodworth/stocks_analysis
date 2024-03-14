@@ -3,6 +3,7 @@ import logging
 import os 
 import pandas as pd 
 import glob
+import re
 
 from flask import json, request
 
@@ -14,17 +15,17 @@ csv_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'historical_data\
 
 logging.basicConfig(filename=log_fname, encoding='utf-8', level=logging.DEBUG, filemode = "w")
 
-def percent_to_float(x):
-    logging.info("De-percenting %s", x)
-    x = x.strip()
+def percent_to_float(input_string):
+    logging.info("De-percenting %s", input_string)
+    input_string = input_string.strip()
     # TODO: use RegEx in below to check if input is a percent
-    if(x.lower == "nan" or x.lower == "na"):
-        x = "0.00%"
+    if(not re.fullmatch("\d*(\.\d+)?%", input_string)):
+        input_string = "0.00%"
     try:
-        output = float(x.strip('%'))/100
+        output = float(input_string.strip('%'))/100
         return output
     except: 
-        logging.exception("Unable to de-percent input: %s", x)
+        logging.exception("Unable to de-percent input: %s", input_string)
     
 
 def iterate_pull_data(timeframe_days):
