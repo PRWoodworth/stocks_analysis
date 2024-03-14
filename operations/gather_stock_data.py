@@ -7,13 +7,12 @@ import threading
 import time 
 import logging
 import os 
-import sys
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 log_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'logs')
-log_fname = os.path.join(log_dir, 'get_stock_data.log')
+gather_data_log_fname = os.path.join(log_dir, 'get_stock_data.log')
 
-logging.basicConfig(filename=log_fname, encoding='utf-8', level=logging.DEBUG, filemode = "w")
+logging.basicConfig(filename=gather_data_log_fname, encoding='utf-8', level=logging.DEBUG, filemode = "w")
 
 data = []
 symbol = []
@@ -57,7 +56,8 @@ def read_stock_tickers():
     return symbol
         
 
-def main():
+def gather_data():
+    logging.info("Beginning full ticker data fetch.")
     start = time.time()
     stock_ticker_list = read_stock_tickers()
     stock_ticker_queue = Queue()
@@ -71,8 +71,5 @@ def main():
     end = time.time()
     duration = end - start 
     logging.info("All stock tickers queried in %s seconds.", duration)
-    sys.exit()
-
-if __name__ == '__main__':
-    main()
+    return json.dumps({"success": True}), 201
 

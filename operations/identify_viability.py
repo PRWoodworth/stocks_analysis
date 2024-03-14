@@ -9,11 +9,11 @@ from flask import json, request
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 log_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'logs')
-log_fname = os.path.join(log_dir, 'identify_viability.log')
+baseline_viability_log_fname = os.path.join(log_dir, 'identify_viability.log')
 csv_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'historical_data\\csv_data')
 
 
-logging.basicConfig(filename=log_fname, encoding='utf-8', level=logging.DEBUG, filemode = "w")
+logging.basicConfig(filename=baseline_viability_log_fname, encoding='utf-8', level=logging.DEBUG, filemode = "w")
 
 def percent_to_float(input_string):
     logging.info("De-percenting %s", input_string)
@@ -58,7 +58,7 @@ def print_viability(data_frame, timeframe_days):
     data_frame.to_csv(viability_fname ,encoding='utf-8')
     return
 
-def main():
+def baseline_viability():
     timeframe_days = request.get_json().get('timeframe')
     logging.info("Timeframe of %s days.", timeframe_days)
     viability_frame = iterate_pull_data(timeframe_days)
