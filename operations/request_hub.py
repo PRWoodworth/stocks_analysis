@@ -1,4 +1,4 @@
-from identify_viability import baseline_viability
+from get_time_period_average import baseline_average
 from gather_stock_data import gather_data
 import logging
 import os 
@@ -10,9 +10,9 @@ request_log_fname = os.path.join(log_dir, 'request_hub.log')
 
 logging.basicConfig(filename=request_log_fname, encoding='utf-8', level=logging.DEBUG, filemode = "w")
 
-@api.route('/identify_viability', methods=['PUT'])
-def call_identify_viability():
-    response = baseline_viability()
+@api.route('/baseline_average', methods=['PUT'])
+def call_baseline_average():
+    response = baseline_average()
     return response
 
 @api.route('/gather_stock_data', methods=['GET'])
