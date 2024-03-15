@@ -1,4 +1,4 @@
 /historical_data/*
 !/historical_data/Tickers.json
 /logs/*
-__pycache__/
+operations/__pycache__/
