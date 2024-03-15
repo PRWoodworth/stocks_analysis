@@ -18,7 +18,6 @@ logging.basicConfig(filename=baseline_viability_log_fname, encoding='utf-8', lev
 def percent_to_float(input_string):
     logging.info("De-percenting %s", input_string)
     input_string = input_string.strip()
-    # TODO: use RegEx in below to check if input is a percent
     if(not re.fullmatch("^-?\d*(\.\d+)?%", input_string)):
         input_string = "0.00%"
     try:
