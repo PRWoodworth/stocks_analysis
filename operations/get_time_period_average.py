@@ -53,7 +53,7 @@ def check_average(input_data_frame, time_period):
     return average
 
 def print_average(data_frame, timeframe_days):
-    average_fname = os.path.join(os.path.normpath(os.getcwd() + os.sep), ('historical_data\\average_days_%s.csv' % timeframe_days))
+    average_fname = os.path.join(os.path.normpath(os.getcwd() + os.sep), ('historical_data\\average_output\\average_days_%s.csv' % timeframe_days))
     data_frame.to_csv(average_fname ,encoding='utf-8')
     return
 
