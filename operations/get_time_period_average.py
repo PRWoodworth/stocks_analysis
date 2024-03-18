@@ -57,7 +57,7 @@ def print_average(data_frame, timeframe_days):
     data_frame.to_csv(average_fname ,encoding='utf-8')
     return
 
-def baseline_average():
+def time_period_average():
     timeframe_days = request.get_json().get('timeframe')
     logging.info("Timeframe of %s days.", timeframe_days)
     average_frame = iterate_pull_data(timeframe_days)
