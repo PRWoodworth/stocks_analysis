@@ -19,8 +19,8 @@ add_daily_percents <- function(framed_historical_data){
     daily_open <- framed_historical_data$Open
     
     percent_change <- rep(NA, length(framed_historical_data))
-    percent_change <- daily_close/daily_open
-    percent_change <- percent(percent_change - 1)
+    percent_change <- (daily_close/daily_open) - 1    
+    # percent_change <- percent(percent_change - 1)
     
 
     framed_historical_data$Percent <- percent_change
