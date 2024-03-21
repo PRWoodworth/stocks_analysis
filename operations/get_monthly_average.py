@@ -15,7 +15,6 @@ logging.basicConfig(filename=baseline_average_log_fname, encoding='utf-8', level
 def get_monthly_average():
     data_frame = pd.DataFrame() 
     csv_files = [file for file in glob.glob(csv_dir + '\\*', recursive=False) if not os.path.isdir(file)]
-    logging.info(csv_files)
     average_frame = pd.DataFrame(columns = ['Date', 'Percent'])
     
     for file in csv_files:
