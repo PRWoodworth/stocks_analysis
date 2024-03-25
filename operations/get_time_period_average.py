@@ -34,11 +34,11 @@ def iterate_pull_data(timeframe_days):
     for file in csv_files:
         filename = (os.path.basename(file).split('/')[-1])
         ticker_name = filename.split('.')[0]
-        logging.info("Starting baseline average check on %s", filename)
+        logging.info("Starting average check on %s", filename)
         data_frame = pd.read_csv(file, converters={'Percent':percent_to_float}, header=0, nrows = timeframe_days)
         data_frame = data_frame.loc[:, ~data_frame.columns.str.contains('^Unnamed')]
         average = float(check_average(data_frame, timeframe_days))
-        logging.info("Baseline average: %s", average)
+        logging.info("Average: %s", average)
         average_frame = pd.concat([pd.DataFrame([[ticker_name, average]], columns = average_frame.columns), average_frame], ignore_index = True)
         data_frame.loc[:] = None
     return average_frame
@@ -53,7 +53,11 @@ def check_average(input_data_frame, time_period):
     return average
 
 def print_average(data_frame, timeframe_days):
-    average_fname = os.path.join(os.path.normpath(os.getcwd() + os.sep), ('historical_data\\average_output\\average_days_%s.csv' % timeframe_days))
+    target_dir = 'historical_data\\csv_data\\time_period_averages'
+    filename = ('average_days_%s.csv' % timeframe_days)
+    if not os.path.exists(target_dir):
+        os.mkdir(target_dir)
+    average_fname = os.path.join(os.path.normpath(os.getcwd() + os.sep), (os.path.join(target_dir, filename)))
     data_frame.to_csv(average_fname ,encoding='utf-8')
     return
 
