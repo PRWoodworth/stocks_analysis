@@ -4,6 +4,7 @@ import os
 import pandas as pd 
 import glob
 import re
+from flask import json, request
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 log_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'logs')
@@ -25,11 +26,20 @@ def get_monthly_average():
         average_frame = pd.read_csv(file, header=0)
         average_frame = average_frame.loc[:, ~average_frame.columns.str.contains('^Unnamed')]
         data_frame = average_frame.groupby(pd.PeriodIndex(average_frame['Date'], freq="M"))['Percent'].mean().reset_index()
-        
+        print_average(data_frame, ticker_name)
         data_frame.loc[:] = None
-    return average_frame
+    return data_frame
 
 def print_average(data_frame, ticker_name):
-    average_fname = os.path.join(os.path.normpath(os.getcwd() + os.sep), ('historical_data\\monthly_averages\\%s_monthly_average.csv' % ticker_name))
+    target_dir = 'historical_data\\csv_data\\monthly_averages'
+    filename = ('%s_monthly_average.csv' % ticker_name)
+    if not os.path.exists(target_dir):
+        os.mkdir(target_dir)
+    average_fname = os.path.join(os.path.normpath(os.getcwd() + os.sep), (os.path.join(target_dir, filename)))
+    logging.info(average_fname)
     data_frame.to_csv(average_fname ,encoding='utf-8')
     return
+
+def monthly_average():
+    get_monthly_average()
+    return json.dumps({"success": True}), 201

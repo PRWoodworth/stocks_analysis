@@ -1,5 +1,5 @@
 from get_time_period_average import time_period_average
-from get_monthly_average import get_monthly_average
+from get_monthly_average import monthly_average
 from gather_stock_data import gather_data
 import logging
 import os 
@@ -18,7 +18,7 @@ def call_time_period_average():
 
 @api.route('/monthly_average', methods = ['GET'])
 def call_monthly_average():
-    response = get_monthly_average()
+    response = monthly_average()
     return response
 
 @api.route('/gather_stock_data', methods=['GET'])
