@@ -54,7 +54,7 @@ def check_average(input_data_frame, time_period):
 
 def print_average(data_frame, timeframe_days):
     target_dir = 'historical_data\\csv_data\\time_period_averages'
-    filename = ('average_days_%s.csv' % timeframe_days)
+    filename = ('%s_day_average.csv' % timeframe_days)
     if not os.path.exists(target_dir):
         os.mkdir(target_dir)
     average_fname = os.path.join(os.path.normpath(os.getcwd() + os.sep), (os.path.join(target_dir, filename)))
