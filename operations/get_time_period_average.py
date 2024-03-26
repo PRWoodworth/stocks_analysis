@@ -10,7 +10,7 @@ from flask import json, request
 dir_path = os.path.dirname(os.path.realpath(__file__))
 log_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'logs')
 baseline_average_log_fname = os.path.join(log_dir, 'identify_average.log')
-csv_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'historical_data\\csv_data')
+csv_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'historical_data\\csv_data\\raw_data')
 
 
 logging.basicConfig(filename=baseline_average_log_fname, encoding='utf-8', level=logging.DEBUG, filemode = "w")
@@ -58,6 +58,7 @@ def print_average(data_frame, timeframe_days):
     if not os.path.exists(target_dir):
         os.mkdir(target_dir)
     average_fname = os.path.join(os.path.normpath(os.getcwd() + os.sep), (os.path.join(target_dir, filename)))
+    logging.info("Writing results to %s" %average_fname)
     data_frame.to_csv(average_fname ,encoding='utf-8')
     return
 
