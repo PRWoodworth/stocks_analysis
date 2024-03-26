@@ -35,7 +35,7 @@ def iterate_pull_data(timeframe_days):
         filename = (os.path.basename(file).split('/')[-1])
         ticker_name = filename.split('.')[0]
         logging.info("Starting average check on %s", filename)
-        data_frame = pd.read_csv(file, converters={'Percent':percent_to_float}, header=0, nrows = timeframe_days)
+        data_frame = pd.read_csv(file, header=0, nrows = timeframe_days)
         data_frame = data_frame.loc[:, ~data_frame.columns.str.contains('^Unnamed')]
         average = float(check_average(data_frame, timeframe_days))
         logging.info("Average: %s", average)
