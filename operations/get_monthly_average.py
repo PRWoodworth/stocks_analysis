@@ -3,8 +3,7 @@ import logging
 import os 
 import pandas as pd 
 import glob
-import re
-from flask import json, request
+from flask import json
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 log_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'logs')
