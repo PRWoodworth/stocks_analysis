@@ -21,10 +21,11 @@ def json_to_csv_conversion():
     json_files = [file for file in glob.glob(json_dir + '\\*', recursive=False) if not os.path.isdir(file)]
     
     for file in json_files:
+        with open(file) as jsonfile:
+            data = json.load(jsonfile)
+            jsonfile.close()
         filename = (os.path.basename(file).split('/')[-1])
         ticker_name = filename.split('.')[0]
-        data = json.loads(file)
-        logging.info("DATA %s" %data_frame)
         data_frame = pd.json_normalize(data, record_path=['tradesTable', 'rows'], meta=['date', 'close', 'volume', 'open', 'high', 'low'])
         logging.info("DATA FRAME %s" %data_frame)
         print_to_csv(data_frame, ticker_name)
