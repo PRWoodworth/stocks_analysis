@@ -26,9 +26,7 @@ def json_to_csv_conversion():
             jsonfile.close()
         filename = (os.path.basename(file).split('/')[-1])
         ticker_name = filename.split('.')[0]
-        logging.info("DATA %s" %data)
-        data_frame = pd.json_normalize(data, record_path=['data', ['tradesTable', 'rows']], meta=['date', 'close', 'volume', 'open', 'high', 'low'])
-        logging.info("DATA FRAME %s" %data_frame)
+        data_frame = pd.json_normalize(data, record_path=['data', ['tradesTable', 'rows']])
         print_to_csv(data_frame, ticker_name)
         data_frame.loc[:] = None
     return
