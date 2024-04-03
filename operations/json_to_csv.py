@@ -27,6 +27,16 @@ def json_to_csv_conversion():
         filename = (os.path.basename(file).split('/')[-1])
         ticker_name = filename.split('.')[0]
         data_frame = pd.json_normalize(data, record_path=['data', ['tradesTable', 'rows']])
+        
+        data_frame['close'] = data_frame['close'].replace({r'\$': '', ',': ''}, regex=True)
+        data_frame['open'] = data_frame['open'].replace({r'\$': '', ',': ''}, regex=True)
+        data_frame['high'] = data_frame['high'].replace({r'\$': '', ',': ''}, regex=True)
+        data_frame['low'] = data_frame['low'].replace({r'\$': '', ',': ''}, regex=True)
+        data_frame['volume'] = data_frame['volume'].replace({r'\$': '', ',': ''}, regex=True)
+
+        data_frame = data_frame.apply(pd.to_numeric, errors='ignore')
+        
+        data_frame.insert(6, 'percent', data_frame['close']/data_frame['open'])
         print_to_csv(data_frame, ticker_name)
         data_frame.loc[:] = None
     return

@@ -30,7 +30,7 @@ def percent_to_float(input_string):
 def iterate_pull_data(timeframe_days):
     data_frame = pd.DataFrame() 
     csv_files = glob.glob(csv_dir + '\\*')
-    average_frame = pd.DataFrame(columns = ['Ticker', 'Percent'])
+    average_frame = pd.DataFrame(columns = ['ticker', 'percent'])
     for file in csv_files:
         filename = (os.path.basename(file).split('/')[-1])
         ticker_name = filename.split('.')[0]
@@ -46,7 +46,7 @@ def iterate_pull_data(timeframe_days):
 def check_average(input_data_frame, time_period):
     average = 0
     percent_column = None
-    percent_column = input_data_frame[['Percent']]
+    percent_column = input_data_frame[['percent']]
     percent_column_time_period_data = percent_column.head(time_period)
     percent_column_sum = percent_column_time_period_data.sum()
     average = percent_column_sum / time_period
