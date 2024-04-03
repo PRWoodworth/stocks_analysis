@@ -36,7 +36,8 @@ def json_to_csv_conversion():
 
         data_frame = data_frame.apply(pd.to_numeric, errors='ignore')
         
-        data_frame.insert(6, 'percent', data_frame['close']/data_frame['open'])
+        data_frame.insert(6, 'percent', (data_frame['close']/data_frame['open']-1))
+        data_frame['percent'] = data_frame['percent'].apply(lambda x: round(x, 4))
         print_to_csv(data_frame, ticker_name)
         data_frame.loc[:] = None
     return
