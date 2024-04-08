@@ -2,6 +2,7 @@ from get_time_period_average import time_period_average
 from get_monthly_average import monthly_average
 from gather_stock_data import gather_data
 from json_to_csv import json_to_csv
+from graphing import generate_graph
 import logging
 import os 
 from flask import Flask
@@ -30,6 +31,11 @@ def call_gather_stock_data():
 @api.route('/json_to_csv', methods=['GET'])
 def call_json_to_csv():
     response = json_to_csv()
+    return response
+
+@api.route('/get_percent_change_graph', methods=['GET'])
+def pass_graph_to_web():
+    response = generate_graph()
     return response
 
 if __name__ == '__main__':

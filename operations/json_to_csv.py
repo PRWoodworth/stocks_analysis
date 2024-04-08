@@ -17,7 +17,6 @@ logging.basicConfig(filename=json_to_csv_log_dir, encoding='utf-8', level=loggin
 
 def json_to_csv_conversion():
     data_frame = pd.DataFrame()
-    cols = ['Date', 'Close', 'Volume', 'Open', 'High', 'Low']
     json_files = [file for file in glob.glob(json_dir + '\\*', recursive=False) if not os.path.isdir(file)]
     
     for file in json_files:
