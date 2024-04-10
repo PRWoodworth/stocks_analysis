@@ -33,7 +33,7 @@ def call_json_to_csv():
     response = json_to_csv()
     return response
 
-@api.route('/get_percent_change_graph', methods=['GET'])
+@api.route('/get_percent_change_graph', methods=['POST'])
 def pass_graph_to_web():
     response = generate_graph()
     return response

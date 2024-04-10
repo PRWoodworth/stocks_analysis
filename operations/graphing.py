@@ -19,7 +19,7 @@ logging.basicConfig(filename=graphing_log_fname, encoding='utf-8', level=logging
 
 def generate_graph():
     ticker_to_graph = request.get_json().get('ticker')
-    target_file_path = csv_dir+ticker_to_graph+'.csv'
+    target_file_path = csv_dir+ticker_to_graph+'_monthly_average.csv'
     target_file = glob.glob(target_file_path, recursive=False)
     with open(target_file[0]) as file:
         avg_frame = pd.read_csv(file, header=0)
