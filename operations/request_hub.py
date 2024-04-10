@@ -39,4 +39,4 @@ def pass_graph_to_web():
     return response
 
 if __name__ == '__main__':
-    api.run()
+    api.run(port=5000)
