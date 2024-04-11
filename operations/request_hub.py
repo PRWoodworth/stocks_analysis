@@ -6,7 +6,10 @@ from graphing import generate_graph
 import logging
 import os 
 from flask import Flask
+from flask_cors import CORS, cross_origin
 api = Flask(__name__)
+cors = CORS(api)
+api.config['CORS_HEADERS'] = 'Content-Type'
 
 log_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'logs')
 request_log_fname = os.path.join(log_dir, 'request_hub.log')
