@@ -1,6 +1,0 @@
-curl --location --request GET 'http://localhost:5000/baseline_average' \
---header 'Content-Type: application/json' \
---data '{
-    "timeframe": 7
-}
-'

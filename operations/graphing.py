@@ -20,6 +20,7 @@ logging.basicConfig(filename=graphing_log_fname, encoding='utf-8', level=logging
 def generate_graph():
     ticker_to_graph = request.get_json().get('ticker')
     target_file_path = csv_dir+ticker_to_graph+'_monthly_average.csv'
+    logging.info("TARGET FILE PATH: %s" %target_file_path)
     target_file = glob.glob(target_file_path, recursive=False)
     logging.info("TARGET FILE: %s" %target_file)
     with open(target_file[0]) as file:

@@ -18,13 +18,30 @@ logging.basicConfig(filename=json_to_csv_log_dir, encoding='utf-8', level=loggin
 def json_to_csv_conversion():
     data_frame = pd.DataFrame()
     json_files = [file for file in glob.glob(json_dir + '\\*', recursive=False) if not os.path.isdir(file)]
+
+    emptyData = 0
+    emptyTradesTable = 0
     
     for file in json_files:
+        logging.info("Target file: %s" %file)
         with open(file) as jsonfile:
             data = json.load(jsonfile)
             jsonfile.close()
         filename = (os.path.basename(file).split('/')[-1])
         ticker_name = filename.split('.')[0]
+
+        if(data['data'] is None):
+            emptyData+=1
+            logging.info("No data contained in this file. Removing and skipping.")
+            os.remove(file)
+            continue
+
+        if(data['data']['tradesTable'] is None):
+            emptyTradesTable+=1
+            logging.info("No data contained in this file. Removing and skipping.")
+            os.remove(file)
+            continue
+
         data_frame = pd.json_normalize(data, record_path=['data', ['tradesTable', 'rows']])
         
         data_frame['close'] = data_frame['close'].replace({r'\$': '', ',': ''}, regex=True)
@@ -39,6 +56,10 @@ def json_to_csv_conversion():
         data_frame['percent'] = data_frame['percent'].apply(lambda x: round(x, 4))
         print_to_csv(data_frame, ticker_name)
         data_frame.loc[:] = None
+
+    logging.info("Empty data field instances: %s" %emptyData)
+    logging.info("Empty trades table field instances: %s" %emptyTradesTable)
+
     return
 
 def print_to_csv(data_frame, ticker_name):
@@ -47,7 +68,7 @@ def print_to_csv(data_frame, ticker_name):
     if not os.path.exists(target_dir):
         os.mkdir(target_dir)
     average_fname = os.path.join(os.path.normpath(os.getcwd() + os.sep), (os.path.join(target_dir, filename)))
-    logging.info(average_fname)
+    logging.info("Outputting to: %s" %average_fname)
     data_frame.to_csv(average_fname ,encoding='utf-8')
     return
 
