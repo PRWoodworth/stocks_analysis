@@ -25,7 +25,7 @@ def generate_graph():
     with open(target_file[0]) as file:
         avg_frame = pd.read_csv(file, header=0)
         
-        monthly_avg_plot = px.line(avg_frame, x="date", y="percent")
+        monthly_avg_plot = px.line(avg_frame, x="Date", y="Percent")
 
         graphJSON = plotly.io.to_json(monthly_avg_plot, pretty=True)
 

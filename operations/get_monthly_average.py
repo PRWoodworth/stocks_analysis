@@ -24,7 +24,7 @@ def get_monthly_average():
         logging.info("Getting monthly averages from %s", filename)
         average_frame = pd.read_csv(file, header=0)
         average_frame = average_frame.loc[:, ~average_frame.columns.str.contains('^Unnamed')]
-        data_frame = average_frame.groupby(pd.PeriodIndex(average_frame['date'], freq="M"))['percent'].mean().reset_index()
+        data_frame = average_frame.groupby(pd.PeriodIndex(average_frame['Date'], freq="M"))['Percent'].mean().reset_index()
         print_average(data_frame, ticker_name)
         data_frame.loc[:] = None
     return data_frame
