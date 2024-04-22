@@ -7,6 +7,7 @@ import logging
 import os 
 from flask import Flask
 from flask_cors import CORS, cross_origin
+from flask import json, request
 api = Flask(__name__)
 cors = CORS(api)
 api.config['CORS_HEADERS'] = 'Content-Type'
@@ -38,7 +39,8 @@ def call_json_to_csv():
 
 @api.route('/get_percent_change_graph', methods=['POST'])
 def pass_graph_to_web():
-    response = generate_graph()
+    logging.info("Incoming graphing request body: %s" %request.get_data())
+    response = generate_graph(request)
     return response
 
 if __name__ == '__main__':
