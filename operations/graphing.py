@@ -24,6 +24,7 @@ def generate_graph(req_body):
     logging.info("TARGET FILE PATH: %s" %target_file_path)
     target_file = glob.glob(target_file_path, recursive=False)
     logging.info("TARGET FILE: %s" %target_file)
+    # TODO: if target ticker has no associated file, return error for user?
     with open(target_file[0]) as file:
         avg_frame = pd.read_csv(file, header=0)
         
