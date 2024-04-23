@@ -39,7 +39,7 @@ def call_json_to_csv():
 
 @api.route('/get_percent_change_graph', methods=['POST'])
 def pass_graph_to_web():
-    logging.info("Incoming graphing request body: %s" %request.get_data())
+    logging.info("Incoming graphing request body: %s" %request)
     response = generate_graph(request)
     return response
 

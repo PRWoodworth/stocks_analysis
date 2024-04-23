@@ -19,7 +19,7 @@ logging.basicConfig(filename=graphing_log_fname, encoding='utf-8', level=logging
 def generate_graph(req_body):
     req_body = req_body.get_json()
     logging.info("Parsed JSON: %s" %req_body)
-    ticker_to_graph = req_body.get_json().get('ticker')
+    ticker_to_graph = req_body.get('ticker')
     target_file_path = csv_dir+ticker_to_graph+'_monthly_average.csv'
     logging.info("TARGET FILE PATH: %s" %target_file_path)
     target_file = glob.glob(target_file_path, recursive=False)
@@ -27,7 +27,7 @@ def generate_graph(req_body):
     with open(target_file[0]) as file:
         avg_frame = pd.read_csv(file, header=0)
         
-        monthly_avg_plot = px.line(avg_frame, x="Date", y="Percent")
+        monthly_avg_plot = px.line(avg_frame, x="date", y="percent")
 
         graphJSON = plotly.io.to_json(monthly_avg_plot, pretty=True)
 
