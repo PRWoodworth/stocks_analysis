@@ -21,6 +21,8 @@ def get_ticker_list():
         target_file = file.split(separator, 1)[1]
         separator = '.csv'
         target_file = target_file.split(separator, 1)[0]
+        separator = '_monthly_average'
+        target_file = target_file.split(separator, 1)[0]
         logging.info("Target file to append: %s" %target_file)
         file_list.append(target_file)
     return json.dumps(file_list)
