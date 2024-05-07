@@ -17,12 +17,7 @@ def get_ticker_list():
     csv_files = [file for file in glob.glob(csv_dir + '\\*', recursive=False) if not os.path.isdir(file)]
     
     for file in csv_files:
-        separator = 'monthly_averages\\'
-        target_file = file.split(separator, 1)[1]
-        separator = '.csv'
-        target_file = target_file.split(separator, 1)[0]
-        separator = '_monthly_average'
-        target_file = target_file.split(separator, 1)[0]
+        target_file = file.split('monthly_averages\\', 1)[1].split('.csv', 1)[0].split('_monthly_average', 1)[0]
         logging.info("Target file to append: %s" %target_file)
         file_list.append(target_file)
     return json.dumps(file_list)
