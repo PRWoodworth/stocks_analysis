@@ -38,7 +38,7 @@ def call_json_to_csv():
     response = json_to_csv()
     return response
 
-@api.route('/get_percent_change_graph', methods=['GET'])
+@api.route('/get_ticker_list', methods=['GET'])
 def compile_ticker_list():
     response = get_ticker_list()
     return response

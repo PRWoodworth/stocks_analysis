@@ -15,7 +15,12 @@ logging.basicConfig(filename=ticker_list_log_name, encoding='utf-8', level=loggi
 def get_ticker_list():
     file_list = []
     csv_files = [file for file in glob.glob(csv_dir + '\\*', recursive=False) if not os.path.isdir(file)]
-    separator = '_'
+    
     for file in csv_files:
-        file_list.append(file.split(separator, 1)[0])
+        separator = 'raw_data\\'
+        target_file = file.split(separator, 1)[1]
+        separator = '.csv'
+        target_file = target_file.split(separator, 1)[0]
+        logging.info("Target file to append: %s" %target_file)
+        file_list.append(target_file)
     return json.dumps(file_list)
