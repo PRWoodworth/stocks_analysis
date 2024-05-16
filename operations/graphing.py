@@ -19,7 +19,9 @@ logging.basicConfig(filename=graphing_log_fname, encoding='utf-8', level=logging
 def generate_graph(req_body):
     req_body = req_body.get_json()
     logging.info("Parsed JSON: %s" %req_body)
-    ticker_to_graph = req_body.get('ticker')
+    ticker_to_graph = req_body.get('ticker_symbol')
+    # TODO: properly extract ticker_symbol from given JSON
+    logging.info("TARGET TICKER: %s" %ticker_to_graph)
     target_file_path = csv_dir+ticker_to_graph+'_monthly_average.csv'
     logging.info("TARGET FILE PATH: %s" %target_file_path)
     target_file = glob.glob(target_file_path, recursive=False)
