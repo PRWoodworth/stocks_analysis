@@ -23,6 +23,7 @@ def get_ticker_list():
         ticker_company_name = match_stock_symbol(target_file)
         ticker_obj = stock_ticker(ticker_company_name, target_file)
         ticker_list.append(ticker_obj)
+        # TODO: fix JSON formatting in response. Has no root object, just base list. May be causing problems in UI.
     return json.dumps(ticker_list, default = obj_dict)
 
 def obj_dict(obj):
