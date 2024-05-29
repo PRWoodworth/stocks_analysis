@@ -17,9 +17,10 @@ csv_dir = os.path.join(os.path.normpath(os.getcwd() + os.sep), 'historical_data\
 logging.basicConfig(filename=graphing_log_fname, encoding='utf-8', level=logging.DEBUG, filemode = "w")
 
 def generate_graph(req_body):
-    req_body = req_body.get_json()
-    logging.info("Parsed JSON: %s" %req_body)
-    ticker_to_graph = req_body.get('ticker_symbol')
+    req_data = json.loads(req_body.get_data())
+    # req_body = req_body.get_json()
+    logging.info("Parsed JSON: %s" %req_data)
+    ticker_to_graph = req_data['ticker']['ticker_symbol']
     # TODO: properly extract ticker_symbol from given JSON
     logging.info("TARGET TICKER: %s" %ticker_to_graph)
     target_file_path = csv_dir+ticker_to_graph+'_monthly_average.csv'
@@ -30,7 +31,7 @@ def generate_graph(req_body):
     with open(target_file[0]) as file:
         avg_frame = pd.read_csv(file, header=0)
         
-        monthly_avg_plot = px.line(avg_frame, x="date", y="percent")
+        monthly_avg_plot = px.line(avg_frame, x="Date", y="Percent")
 
         graphJSON = plotly.io.to_json(monthly_avg_plot, pretty=True)
 
